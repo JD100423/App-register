@@ -1,0 +1,98 @@
+<div class="form-container">
+  <header class="form-header">
+    <img src="/logo.png" alt="Logo Politecnico Braulia de Paula" class="header-logo" />
+    <h1>Registro de Visitantes</h1>
+    <p class="header-subtitle">Bienvenido al Politecnico Braulia de Paula</p>
+  </header>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="visitor-form" novalidate>
+    <div class="form-row">
+        <label>
+            <span>Fecha:</span>
+            <input type="date" formControlName="fecha" />
+        </label>
+        <label>
+            <span>Hora de Entrada:</span>
+            <input type="time" formControlName="horaEntrada" />
+        </label>
+    </div>
+
+    <label>
+        <span>Nombre Completo:</span>
+        <input type="text" formControlName="nombre" />
+        <div class="error-message" *ngIf="error('nombre')">{{ error('nombre') }}</div>
+    </label>
+
+    <div class="form-row">
+        <label>
+            <span>Cédula / Pasaporte:</span>
+            <input type="text"  formControlName="cedula"/>
+            <div class="error-message" *ngIf="error('cedula')">{{ error('cedula') }}</div>
+        </label>
+        <label>
+            <span>Empresa:</span>
+            <input type="text" formControlName="empresa" />
+            <div class="error-message" *ngIf="error('empresa')">{{ error('empresa') }}</div>
+        </label>
+    </div>
+
+    <label>
+        <span>Correo Electrónico:</span>
+        <input type="email" formControlName="correo" />
+        <div class="error-message" *ngIf="error('correo')">{{ error('correo') }}</div>
+    </label>
+
+    <div class="form-row">
+        <label>
+            <span>Area a visitar:</span>
+            <input type="text" formControlName="area" />
+            <div class="error-message" *ngIf="error('area')">{{ error('area') }}</div>
+        </label>
+        <label>
+            <span>Motivo de visita:</span>
+            <input type="text" formControlName="motivo" />
+            <div class="error-message" *ngIf="error('motivo')">{{ error('motivo') }}</div>
+        </label>
+    </div>
+
+    <label class="checkbox-inline">
+        <input type="checkbox" formControlName="carnetVisita" />
+        <span>Solicita carnet de visita</span>
+    </label>
+
+    <label>
+        <span>Hora de Salida:</span>
+        <input type="time" formControlName="horaSalida" />
+    </label>
+
+    <div>
+        <label><span>Firma (use el mouse o un dispositivo táctil):</span></label>
+        <canvas
+        #signCanvas
+        class="signature"
+        width="600"
+        height="140"
+        (mousedown)="startDraw($event)"
+        (mousemove)="draw($event)"
+        (mouseup)="endDraw()"
+        (touchstart)="startDraw($event)"
+        (touchmove)="draw($event)"
+        (touchend)="endDraw()"
+        ></canvas>
+        <div class="error-message" *ngIf="error('firmaDataUrl')">{{ error('firmaDataUrl') }}</div>
+        <div class="signature-actions">
+            <button type="button" class="btn-link" (click)="clearSignature()">Borrar</button>
+            <button type="button" class="btn-link" (click)="downloadSignature()">Descargar</button>
+        </div>
+    </div>
+
+    <div class="form-actions">
+        <button type="submit" class="btn-primary">Guardar Visita</button>
+    </div>
+  </form>
+
+  <footer class="page-footer">
+    <div class="footer-title">Politécnico Braulia de Paula</div>
+    <div class="footer-credit">© 2025 Todos los derechos reservados.<br />Desarrollado por Bartolo Del Rosario M.</div>
+  </footer>
+</div>
