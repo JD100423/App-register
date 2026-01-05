@@ -1,0 +1,159 @@
+* {
+    box-sizing: border-box;
+}
+
+.login-container {
+    height: 100vh;
+    margin: 0;
+    display: grid;
+    align-items: center;
+    place-items: center;
+}
+
+
+.login-card {
+    display: flex;
+    align-items: center;
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 6px;
+    width: 90vh;
+    max-width: 800px;
+    box-shadow: 0px 20px 54px rgb(126, 48, 255 / 12);
+}
+
+.login-content {
+    padding: 32px;
+    width: 50%;
+}
+
+
+.hero {
+    width: 100%;
+    align-items: center;
+    border-radius: 14px;
+    margin-left: 23px;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    background: linear-gradient(45deg, #7386d8, #ac5df1);
+}
+
+.logo-white {
+    height: 48px;
+    display: none;
+}
+
+.graphic {
+    width: 100%;
+    height: 100%;
+}
+.logo{
+    width: 100px;
+    margin-bottom: 10px;
+
+}
+
+.login-content, .hero {
+    transition: width 0.3s;
+}
+
+.login-content > h2 {
+    margin-bottom: 20px;
+}
+.login-content > h3 {
+    color: #b4b4b4;
+    font-size: 12px;
+    font-weight: 400;
+    }
+
+input, button {
+    font-size: 16px;
+    font-family: inherit;
+    display: block;
+    padding: 0 16px;
+    border-radius: 6px;
+    height: 48px;
+}
+
+form > input {
+    width: 100%;
+    margin-bottom: 10px;
+    color: inherit;
+    border: 1px solid #a9a9a9;
+    background: transparent;
+}
+
+input[type="checkbox"]:checked {
+    color: inherit;
+    accent-color: #816ce0;
+}
+
+form > input::placeholder {
+    color: #b4b4b4;
+}
+
+form .row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.login-content > form {
+    padding: 0;
+}
+
+form a {
+    color: var(--color-muted);
+    font-size: 14px;
+    white-space: nowrap;
+}
+form > button {
+    background: #816ce0;
+    color: #ffffff;
+    border: 0;
+    padding: 0 48px;
+    cursor: pointer;
+
+
+}
+
+p {
+    font-size: 14px;
+    margin-top: 30px;
+    color: #b4b4b4;
+}
+
+p a {
+    color: #816ce0;
+}
+
+@media (width <= 700px) {
+    .login-content { width: 60%; }
+    .hero { width: 40%; }
+}
+
+@media (width <= 600px) {
+    .login-card {
+        padding: 24px 24px 0;
+        flex-direction: column-reverse;
+    }
+
+    .login-content {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .hero { width: 100%; height: 160px; }
+    .login-card h2 { margin-bottom: 10px; }
+    .login-card h3 { margin-bottom: 24px; }
+    .login-card form { width: 100%; }
+    .login-card form button { width: 100%; }
+    .logo, .graphic { display: none; }
+    .logo-white { display: block; }
+    .login-content > img { height: 28px; }
+}

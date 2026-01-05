@@ -2,33 +2,10 @@
     <img src="/logo.png" alt="Logo Politecnico Braulia de Paula" class="header-logo" />
     <h1>Registro de Visitantes</h1>
     <p class="header-subtitle">Bienvenido al Politecnico Braulia de Paula</p>
-  </header>
-<section class="dashboard">
-    <div class="cards">
-        <div class="card" role="button" (click)="registerEntry()" tabindex="0" (keyup.enter)="registerEntry()">
-            <div class="card-image">
-                <img src="/entry.png" alt="Registar Entrada" />
-            </div>
-            <div class="card-body">
-                <h3 class="card-title">Registrar Entrada</h3>
-                <p class="card-desc">Registrar la llegada del visitante</p>
-            </div>
-        </div>
+    <nav>
 
-        <div class="cards">
-        <div class="card" role="button" (click)="registerExit()" tabindex="0" (keyup.enter)="registerExit()">
-            <div class="card-image">
-                <img src="/exit.png" alt="Registrar Salida" />
-            </div>
-            <div class="card-body">
-                <h3 class="card-title">Registrar Salida</h3>
-                <p class="card-desc">Registrar la salida del visitante</p>
-            </div>
-        </div>
-    </div>
-    </div>
-</section>
-<footer class="page-footer">
-  <div class="footer-title">Politécnico Braulia de Paula</div>
-  <div class="footer-credit">© 2025 Todos los derechos reservados.<br />Desarrollado por Bartolo Del Rosario M.</div>
-</footer>
+        <a routerLink="/register-entrance" (click)="goRegisterEntrance()" class="nav-link"></a>
+        <a routerLink="/register-exit" class="nav-link"></a>
+    </nav>
+  </header>
+  <router-outlet></router-outlet>

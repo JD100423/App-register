@@ -1,16 +1,21 @@
-import { Component, ElementRef, ViewChild, PLATFORM_ID, Inject } from '@angular/core';
+import { Component, ElementRef, ViewChild, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { isPlatformBrowser } from '@angular/common';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   standalone: true,
   selector: 'app-root',
   templateUrl: './register-entrance.html',
   styleUrl: './register-entrance.css',
-  imports: [CommonModule, ReactiveFormsModule]
+  imports: [CommonModule, ReactiveFormsModule, RouterLink]
 })
-export class App {
+export class RegisterEntranceComponent {
+  private readonly fb = inject(FormBuilder);
+  private readonly router = inject(Router)
+
+
   @ViewChild('signCanvas') signCanvas?: ElementRef<HTMLCanvasElement>;
 
   submitted = false;
@@ -19,14 +24,8 @@ export class App {
 
   private today = new Date().toISOString().slice(0, 10);
   private now = new Date().toTimeString().slice(0, 5);
-  
-  form!: ReturnType<typeof FormBuilder.prototype.group>;
 
-  constructor(
-    private fb: FormBuilder,
-    @Inject(PLATFORM_ID) private platformId: Object
-  ) {
-    this.form = this.fb.group({
+    form = this.fb.group({
       fecha: [this.today, Validators.required],
       horaEntrada: [this.now, Validators.required],
       nombre: ['', Validators.required],
@@ -37,14 +36,16 @@ export class App {
       motivo: ['', Validators.required],
       carnetVisita: [false],
       horaSalida: [''],
-      firmaDataUrl: [null as string | null, Validators.required]
+      firmaDataUrl: [null as string | null]
     });
-  }
 
 
   ngAfterViewInit(): void {
-    if (!isPlatformBrowser(this.platformId) || !this.signCanvas) return;
+    if (!isPlatformBrowser("") || !this.signCanvas) return;
     
+    const now = new Date();
+    const fecha = now.toISOString().slice(0, 10);
+    const hora = now.toTimeString().slice(0, 5);
     const canvas = this.signCanvas.nativeElement;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
@@ -53,6 +54,7 @@ export class App {
     this.ctx.lineJoin = 'round';
     this.ctx.lineCap = 'round';
     this.ctx.strokeStyle = '#222';
+
   }
 
   private pointerPos(e: MouseEvent | TouchEvent) {
@@ -146,5 +148,6 @@ export class App {
 
     this.clearSignature();
     this.submitted = false;
+    console.log(this.form.value);
   }
 }
