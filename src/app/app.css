@@ -13,6 +13,37 @@
     flex-direction: column;
 }
 
+.user-action {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 1rem;
+}
+
+.user-name {
+    font-weight: 600;
+    padding: 0.5rem 0.5rem;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 50px;
+}
+
+.btn-logout {
+    padding: 0.75rem 1.5rem;
+    background: red;
+    color: #fff;
+    border: 2px solid #fff;
+    border-radius: 50px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-logout:hover {
+    background: #fff;
+    color: #8644c5;
+    transform: translateY(-2px);
+}
+
 .visitor-form {
     flex: 1 0 auto;
 }
@@ -47,3 +78,10 @@
 .footer-title { font-weight: 700; }
 .footer-subtitle { margin-top: 6px; font-weight: 600; }
 .footer-credit { margin-top: 10px; font-size: 11px; opacity: .85; }
+
+@media (max-width: 768px) {
+    .user-action {
+        flex-direction: column;
+        width: 100%;
+    }
+}

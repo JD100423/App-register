@@ -40,9 +40,10 @@ export class RegisterLoginComponent {
                 this.alert.error('Correo ya registrado', 'Intenta iniciar sesión');
                 return;
             }
-
+            console.log('Usuario registrado:', { name, email });
+            
             await this.alert.success('Usuario creado', 'Ya puedes iniciar sesión');
-            this.router.navigateByUrl('/login');
+            this.router.navigate(['']);
         }
     }
 }

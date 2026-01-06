@@ -1,19 +1,25 @@
 import { Component, ElementRef, ViewChild, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { isPlatformBrowser } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
+import { FooterComponent } from "../../components/footer";
+import { AlertService } from '../../services/alert';
+import { RegisterService } from '../../services/registers';
+import { FormEntrance } from '../../interface/formEntrance';
 
 @Component({
   standalone: true,
   selector: 'app-root',
   templateUrl: './register-entrance.html',
   styleUrl: './register-entrance.css',
-  imports: [CommonModule, ReactiveFormsModule, RouterLink]
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, FooterComponent]
 })
 export class RegisterEntranceComponent {
   private readonly fb = inject(FormBuilder);
+  private readonly alert = inject(AlertService);
   private readonly router = inject(Router)
+  private readonly registerService = inject(RegisterService);
 
 
   @ViewChild('signCanvas') signCanvas?: ElementRef<HTMLCanvasElement>;
@@ -39,6 +45,33 @@ export class RegisterEntranceComponent {
       firmaDataUrl: [null as string | null]
     });
 
+    saveVisitorToStorage(data: FormEntrance) {
+      try {
+        const raw = localStorage.getItem('visitors') || "{}";
+        const visitors = JSON.parse(raw);
+        visitors[data.cedula] = {...data, savedAt: new Date().toISOString() };
+        localStorage.setItem('visitors', JSON.stringify(visitors));
+      } catch (err) {
+        console.error('Error saving visitor to storage', err);
+      }
+    }
+
+    async postVisitorData (data: FormEntrance) {
+      try {
+        const res = await fetch('/api/visitors', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        if (!res.ok) {
+          const txt = await res.text();
+          throw new Error(txt || `HTTP ${res.status}`);
+        }
+        return res.json();
+      } catch (err) {
+        throw err;
+      }
+    }
 
   ngAfterViewInit(): void {
     if (!isPlatformBrowser("") || !this.signCanvas) return;
@@ -127,12 +160,17 @@ export class RegisterEntranceComponent {
   }
 
   onSubmit() {
-    this.submitted = true;
-    if (this.form.invalid) return;
-    alert("Registro guardado con éxito.");
+    if (this.form.valid) {
+      const formData: FormEntrance = this.form.value as FormEntrance;
+      this.saveVisitorToStorage(formData);(() => {
+        this.alert.success('Visita registrada', 'Los datos de la visita han sido guardados correctamente.');
+        this.router.navigate(['/home']);
+      })();
+      return;
+    }
     const today = new Date().toISOString().slice(0, 10);
-    const now = new Date().toTimeString().slice(0, 5);
-    this.form.reset({
+      const now = new Date().toTimeString().slice(0, 5);
+      this.form.reset({
       fecha: today,
       horaEntrada: now,
       nombre: '',
@@ -144,10 +182,12 @@ export class RegisterEntranceComponent {
       carnetVisita: false,
       horaSalida: '',
       firmaDataUrl: null
-    });
-
-    this.clearSignature();
-    this.submitted = false;
-    console.log(this.form.value);
+      });
+      this.submitted = false;
+      this.clearSignature();
+      if (!this.form.valid){
+        this.alert.error('Formulario inválido', 'Por favor, completa todos los campos requeridos.');
+        return;
+      }
   }
 }

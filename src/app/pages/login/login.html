@@ -4,20 +4,20 @@
             <img src="/logo.png" alt="logo" class="logo"/>
             <h2>Iniciar sesión</h2>
             <h3>Por favor, ingrese sus credenciales.</h3>
-            <form>
-                <input type="email" placeholder="Correo Electrónico" />
-                <input type="password" placeholder="Contraseña"/>
+            <form [formGroup]="formLogin" (ngSubmit)="onSubmit()">
+                <input type="email" placeholder="Correo Electrónico" formControlName="email" />
+                <input type="password" placeholder="Contraseña" formControlName="password"/>
                 <div class="row">
                     <input type="checkbox" checked/>
                     <label>Recordarme</label>
                     <a href="">¿Olvidó su contraseña?</a>
                 </div>
-                <button>Iniciar sesión</button>
+                <button type="submit" [disabled]="formLogin.invalid" class="btn-auth">Iniciar sesión</button>
             </form>
             <p>No tienes una cuenta? <a routerLink="/register">Regístrate aquí</a>    </p>
         </div>
         <div class="hero">
-            <img src="/logo.png" alt="logo" class="logo-white"/>
+            <img src="/icon.png" alt="logo" class="logo-white"/>
             <img src="/login-img.png" alt="logo-login" class="graphic">
         </div>
     </div>

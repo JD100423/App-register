@@ -2,8 +2,13 @@
     <img src="/logo.png" alt="Logo Politecnico Braulia de Paula" class="header-logo" />
     <h1>Registro de Visitantes</h1>
     <p class="header-subtitle">Bienvenido al Politecnico Braulia de Paula</p>
-    <nav>
-
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="user-action" *ngIf="isLoggedIn">
+                <span class="user-name">Usuario: {{ userName }}</span>
+                <button class="btn-logout" (click)="logout()">Cerrar Sesión</button>
+            </div>
+        </div>
         <a routerLink="/register-entrance" (click)="goRegisterEntrance()" class="nav-link"></a>
         <a routerLink="/register-exit" class="nav-link"></a>
     </nav>

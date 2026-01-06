@@ -4,6 +4,21 @@
   margin-bottom: 12px;
 }
 
+.volver-link {
+    text-decoration: none;
+    background: #4a82f0;
+    padding: 1rem;
+    border-radius: 10px;
+    color: #ffffff;
+}
+
+.form-title {
+    margin: 16px 0;
+    font-size: 20px;
+    text-align: center;
+    color: #333;
+}
+
 .form-container {
     max-width: 1080px;
     margin: 0 auto;

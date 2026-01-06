@@ -1,6 +1,6 @@
 <div class="form-container">
-    <a routerLink="/">Volver</a>
-    <h2>Registrar Entrada de Visitante</h2>
+    <a routerLink="/home" class="volver-link">Volver</a>
+    <h2 class="form-title">Registrar Entrada de Visitante</h2>
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="visitor-form" novalidate>
     <div class="form-row">
         <label>
@@ -82,7 +82,8 @@
     </div>
 
     <div class="form-actions">
-        <button type="submit" class="btn-primary">Guardar Visita</button>
+        <button type="submit" (click)="onSubmit()" class="btn-primary">Guardar Visita</button>
     </div>
   </form>
+  <app-footer />
 </div>

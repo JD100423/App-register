@@ -1,14 +1,15 @@
 import { CommonModule } from "@angular/common";
 import { Component, inject } from "@angular/core";
-import { Router, RouterOutlet } from "@angular/router";
+import { Router } from "@angular/router";
 import { AuthService } from "../../services/auth";
+import { FooterComponent } from "../../components/footer";
 
 @Component({
     standalone: true,
     selector: 'app-root',
     templateUrl: './home.html',
     styleUrl: './home.css',
-    imports: [ CommonModule ]
+    imports: [ CommonModule, FooterComponent ]
 })
 
 export class HomeComponent {
