@@ -10,10 +10,10 @@ import { ForgotPasswordComponent } from './pages/password-recovery/password-reco
 export const routes: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
     { path: 'login', component: LoginComponent, },
-    { path: 'register', component: RegisterLoginComponent, canActivate: [CanActivateAuthGuard] },
+    { path: 'register', component: RegisterLoginComponent },
     { path: 'home', component: HomeComponent, canActivate: [CanActivateAuthGuard] },
     { path: 'entrance', component: RegisterEntranceComponent , canActivate: [CanActivateAuthGuard] },
     { path: 'exit', component: RegisterExitComponent, canActivate: [CanActivateAuthGuard] },
-    { path: 'forgot', component: ForgotPasswordComponent, canActivate: [CanActivateAuthGuard] },
+    { path: 'forgot', component: ForgotPasswordComponent },
     { path: '**', redirectTo: '/login' }
 ];

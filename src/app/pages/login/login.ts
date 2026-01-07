@@ -11,7 +11,7 @@ import { AlertService } from '../../services/alert';
   selector: 'app-root',
   templateUrl: './login.html',
   styleUrl: './login.css',
-  imports: [CommonModule, FooterComponent, RouterLink, ReactiveFormsModule]
+  imports: [CommonModule, FooterComponent, ReactiveFormsModule, RouterLink]
 })
 
 
@@ -21,10 +21,6 @@ export class LoginComponent {
   private readonly auth = inject(AuthService);
   private readonly alert = inject(AlertService);
   private readonly router = inject(Router);
-
-  goForgot() {
-    this.router.navigate(['/forgot']);
-  }
 
   formLogin = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
