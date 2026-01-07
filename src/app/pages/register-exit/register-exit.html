@@ -1,0 +1,30 @@
+<div class="form-container">
+    <a (click)="goHome()" class="volver-link">Volver</a>
+    <div class="visitor-form">
+        <h1 class="title">Registrar Salida</h1>
+
+        <form (submit)="searchVisitor($event)" class="search-form">
+            <input [(ngModel)]="cedula" name="cedula" placeholder="Ingrese la cédula a realizar la salida" />
+            <button type="submit" class="btn-primary">Registrar Salida</button>
+        </form>
+
+        <div *ngIf="visitor" class="exit-form">
+            <div><strong>Nombre:</strong> {{ visitor.nombre }}</div>
+            <div><strong>Empresa:</strong> {{ visitor.empresa }}</div>
+            <div><strong>hora de entrada:</strong> {{ visitor.horaEntrada }}</div>
+
+            <form (submit)="registerExit($event)" class="submit-grid">
+                <label >
+                    Hora de salida:
+                    <input type="time" [(ngModel)]="horaSalida" name="horaSalida" required class="exit-time"/>
+                </label>
+
+                <div class="exit-footer">
+                    <button type="submit" class="btn-primary">Registrar Salida</button>
+                    <button (click)="cancel()" type="button" class="btn-secondary">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<app-footer></app-footer>

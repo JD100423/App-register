@@ -14,11 +14,17 @@ import { AlertService } from '../../services/alert';
   imports: [CommonModule, FooterComponent, RouterLink, ReactiveFormsModule]
 })
 
+
+
 export class LoginComponent {
   private readonly fb = inject(FormBuilder);
   private readonly auth = inject(AuthService);
   private readonly alert = inject(AlertService);
   private readonly router = inject(Router);
+
+  goForgot() {
+    this.router.navigate(['/forgot']);
+  }
 
   formLogin = this.fb.group({
     email: ['', [Validators.required, Validators.email]],

@@ -19,4 +19,8 @@ export class HomeComponent {
   goRegisterEntrance() {
     this.router.navigate(['/entrance'])
   }
+
+  goRegisterExit() {
+    this.router.navigate(['/exit'])
+  }
 }

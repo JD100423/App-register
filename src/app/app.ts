@@ -3,6 +3,7 @@ import { CommonModule, NgIf } from '@angular/common';
 import { Router, RouterOutlet, RouterLink } from '@angular/router';
 import { AuthService } from './services/auth';
 import { AlertService } from './services/alert';
+import { FooterComponent } from "./components/footer";
 
 
 @Component({
