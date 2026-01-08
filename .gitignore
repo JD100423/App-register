@@ -48,4 +48,5 @@ key.env
 *.env
 
 # Google service account keys
-google.tokens.json
+google_tokens.json
+.tokens.json
