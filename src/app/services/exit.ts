@@ -25,19 +25,41 @@ export class ExitService {
     private alert = new AlertService();
     constructor(private http: HttpClient) {}
 
-    getVisitorFromStorage(cedula: string): StoredVisitor | null {
+    async getVisitorFromStorage(cedula: string): Promise<StoredVisitor | null> {
         try {
-            const raw = localStorage.getItem('visitors') || '[]';
+            const resp = await fetch(`/api/visitors/${encodeURIComponent(cedula)}`);
+            if (resp.ok) {
+                const data = await resp.json();
+                console.log('Visitante encontrado en backend:', data);
+                return data;
+            }
+            console.log('Backend no encontró visitante, intentando localStorage');
+            // Fallback a localStorage si el backend falla
+            const raw = localStorage.getItem('visitors') || '{}';
             const visitors = JSON.parse(raw);
             return visitors[cedula] || null;
-        } catch {
-            console.log('No se encontró visitante con esa cédula.');
+        } catch (error) {
+            console.error('Error al buscar visitante:', error);
             return null;
         }
     }
 
-    saveExitForCedula(cedula: string, horaSalida: string): boolean {
+    async saveExitForCedula(cedula: string, horaSalida: string): Promise<boolean> {
         try {
+            console.log('Actualizando salida para cédula:', cedula, 'hora:', horaSalida);
+            const resp = await fetch('/api/visitors', {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ cedula, horaSalida }),
+            });
+            
+            if (resp.ok) {
+                console.log('Salida actualizada exitosamente en backend');
+                return true;
+            }
+            
+            console.error('Backend falló al actualizar, usando localStorage');
+            // Fallback a localStorage si el backend falla
             const raw = localStorage.getItem('visitors') || '{}';
             const visitors = JSON.parse(raw);
             if (!visitors[cedula]) return false;
@@ -45,8 +67,8 @@ export class ExitService {
             visitors[cedula].savedAt = new Date().toISOString();
             localStorage.setItem('visitors', JSON.stringify(visitors));
             return true;
-        } catch {
-            console.log('Error al guardar la salida del visitante.');
+        } catch (error) {
+            console.error('Error al guardar la salida del visitante:', error);
             return false;
         }
     }

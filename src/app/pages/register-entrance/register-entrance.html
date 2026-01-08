@@ -56,31 +56,6 @@
         <span>Solicita carnet de visita</span>
     </label>
 
-    <label>
-        <span>Hora de Salida:</span>
-        <input type="time" formControlName="horaSalida" />
-    </label>
-
-    <div>
-        <label><span>Firma (use el mouse o un dispositivo táctil):</span></label>
-        <canvas
-        #signCanvas
-        class="signature"
-        width="700"
-        height="140"
-        (mousedown)="startDraw($event)"
-        (mousemove)="draw($event)"
-        (mouseup)="endDraw()"
-        (touchstart)="startDraw($event)"
-        (touchmove)="draw($event)"
-        (touchend)="endDraw()"
-        ></canvas>
-        <div class="signature-actions">
-            <button type="button" class="btn-link" (click)="clearSignature()">Borrar</button>
-            <button type="button" class="btn-link" (click)="downloadSignature()">Descargar</button>
-        </div>
-    </div>
-
     <div class="form-actions">
         <button type="submit" (click)="onSubmit()" class="btn-primary">Guardar Visita</button>
     </div>

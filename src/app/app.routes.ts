@@ -12,8 +12,8 @@ export const routes: Routes = [
     { path: 'login', component: LoginComponent, },
     { path: 'register', component: RegisterLoginComponent },
     { path: 'home', component: HomeComponent, canActivate: [CanActivateAuthGuard] },
-    { path: 'entrance', component: RegisterEntranceComponent , canActivate: [CanActivateAuthGuard] },
-    { path: 'exit', component: RegisterExitComponent, canActivate: [CanActivateAuthGuard] },
+    { path: 'entrance', component: RegisterEntranceComponent, canActivate: [CanActivateAuthGuard] },
+    { path: 'exit', component: RegisterExitComponent , canActivate: [CanActivateAuthGuard] },
     { path: 'forgot', component: ForgotPasswordComponent },
     { path: '**', redirectTo: '/login' }
 ];

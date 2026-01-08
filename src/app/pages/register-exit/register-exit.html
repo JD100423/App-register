@@ -4,8 +4,8 @@
         <h1 class="title">Registrar Salida</h1>
 
         <form (submit)="searchVisitor($event)" class="search-form">
-            <input [(ngModel)]="cedula" name="cedula" placeholder="Ingrese la cédula a realizar la salida" />
-            <button type="submit" class="btn-primary">Registrar Salida</button>
+            <input [(ngModel)]="cedula" name="cedula" placeholder="Ingrese la cédula a realizar la salida" (input)="visitor = null" />
+            <button type="submit" class="btn-primary">Buscar Visitante</button>
         </form>
 
         <div *ngIf="visitor" class="exit-form">
@@ -18,6 +18,27 @@
                     Hora de salida:
                     <input type="time" [(ngModel)]="horaSalida" name="horaSalida" required class="exit-time"/>
                 </label>
+
+                    <div>
+                        <label><span>Firma (use el mouse o un dispositivo táctil):</span></label>
+                        <canvas
+                        aria-disabled="false"
+                        #signCanvas
+                        class="signature"
+                        width="700"
+                        height="140"
+                        (mousedown)="startDraw($event)"
+                        (mousemove)="draw($event)"
+                        (mouseup)="endDraw()"
+                        (touchstart)="startDraw($event)"
+                        (touchmove)="draw($event)"
+                        (touchend)="endDraw()"
+                        ></canvas>
+                        <div class="signature-actions">
+                            <button type="button" class="btn-link" (click)="clearSignature()">Borrar</button>
+                            <button type="button" class="btn-link" (click)="downloadSignature()">Descargar</button>
+                        </div>
+                    </div>
 
                 <div class="exit-footer">
                     <button type="submit" class="btn-primary">Registrar Salida</button>

@@ -1,7 +1,6 @@
-import { Component, ElementRef, ViewChild, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { isPlatformBrowser } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { FooterComponent } from "../../components/footer";
 import { AlertService } from '../../services/alert';
@@ -22,11 +21,10 @@ export class RegisterEntranceComponent {
   private readonly registerService = inject(RegisterService);
 
 
-  @ViewChild('signCanvas') signCanvas?: ElementRef<HTMLCanvasElement>;
+
 
   submitted = false;
-  private drawing = false;
-  private ctx: CanvasRenderingContext2D | null = null;
+
 
   private today = new Date().toISOString().slice(0, 10);
   private now = new Date().toTimeString().slice(0, 5);
@@ -47,10 +45,13 @@ export class RegisterEntranceComponent {
 
     saveVisitorToStorage(data: FormEntrance) {
       try {
+        /*
         const raw = localStorage.getItem('visitors') || "{}";
         const visitors = JSON.parse(raw);
         visitors[data.cedula] = {...data, savedAt: new Date().toISOString() };
         localStorage.setItem('visitors', JSON.stringify(visitors));
+        */
+        this.registerService.saveAll([data]);
       } catch (err) {
         console.error('Error saving visitor to storage', err);
       }
@@ -73,72 +74,7 @@ export class RegisterEntranceComponent {
       }
     }
 
-  ngAfterViewInit(): void {
-    if (!isPlatformBrowser("") || !this.signCanvas) return;
-    
-    const now = new Date();
-    const fecha = now.toISOString().slice(0, 10);
-    const hora = now.toTimeString().slice(0, 5);
-    const canvas = this.signCanvas.nativeElement;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-    this.ctx = ctx;
-    this.ctx.lineWidth = 2;
-    this.ctx.lineJoin = 'round';
-    this.ctx.lineCap = 'round';
-    this.ctx.strokeStyle = '#222';
-
-  }
-
-  private pointerPos(e: MouseEvent | TouchEvent) {
-    if (!this.signCanvas) return { x: 0, y: 0 };
-    const rect = this.signCanvas.nativeElement.getBoundingClientRect();
-    const client = (e as TouchEvent).touches?.[0] ?? (e as MouseEvent);
-    return {
-      x: (client as any).clientX - rect.left,
-      y: (client as any).clientY - rect.top
-      
-    }
-  }
-
-  startDraw(e: MouseEvent | TouchEvent) {
-    e.preventDefault();
-    if (!this.ctx) return;
-    const { x, y } = this.pointerPos(e);
-    this.drawing = true;
-    this.ctx.beginPath();
-    this.ctx.moveTo(x, y);
-  }
-
-  draw(e: MouseEvent | TouchEvent) {
-    if (!this.drawing || !this.ctx || !this.signCanvas) return;
-    const { x, y } = this.pointerPos(e);
-    this.ctx.lineTo(x, y);
-    this.ctx.stroke();
-    const dataURL = this.signCanvas.nativeElement.toDataURL('image/png');
-    this.form.get('firmaDataUrl')!.setValue(dataURL);
-  }
-
-  endDraw() {
-    this.drawing = false;
-  }
-
-  clearSignature() {
-    if (!this.signCanvas) return;
-    const canvas = this.signCanvas.nativeElement;
-    this.ctx?.clearRect(0, 0, canvas.width, canvas.height);
-    this.form.get('firmaDataUrl')!.setValue(null);
-  }
-
-  downloadSignature() {
-    const url = this.form.get('firmaDataUrl')!.value;
-    if (!url) return;
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'firma.png';
-    a.click();
-  }
-
+  
   error(key: string): string | null {
     const c = this.form.get(key);
     if (!c) return null;
@@ -184,7 +120,6 @@ export class RegisterEntranceComponent {
       firmaDataUrl: null
       });
       this.submitted = false;
-      this.clearSignature();
       if (!this.form.valid){
         this.alert.error('Formulario inválido', 'Por favor, completa todos los campos requeridos.');
         return;

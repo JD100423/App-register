@@ -69,6 +69,21 @@ input::placeholder{
     padding: 8px;
 }
 
+.signature {
+  border: 1px dashed #c6cada;
+  border-radius: 8px;
+  background: #f9f9fc;
+  display: flex;
+  width: 100%;
+  max-width: 600px;
+  height: 140px;
+  touch-action: none;
+}
+.signature-actions { display: flex; gap: 12px; margin-top: 6px; }
+.btn-link { background: transparent; border: none; color: #4a82f0; font-weight: 600; cursor: pointer; padding: 4px 0; }
+.btn-link:hover { text-decoration: underline; }
+
+
 .btn-primary {
     background: #667eea;
     color: #fff;

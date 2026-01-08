@@ -5,11 +5,16 @@ import {
   writeResponseToNodeResponse,
 } from '@angular/ssr/node';
 import express from 'express';
+import googleRouter from './google-api';
 import { join } from 'node:path';
+import dotenv from 'dotenv';
 
 const browserDistFolder = join(import.meta.dirname, '../browser');
 
 const app = express();
+dotenv.config({ path: 'src/key.env' });
+app.use(express.json());
+app.use(googleRouter);
 const angularApp = new AngularNodeAppEngine();
 
 /**
