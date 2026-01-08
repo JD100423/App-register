@@ -46,3 +46,6 @@ Thumbs.db
 .env
 key.env
 *.env
+
+# Google service account keys
+google.tokens.json
